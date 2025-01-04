@@ -22,6 +22,7 @@ require('lazy').setup {
     { import = 'plugins.lsp' },
     { import = 'plugins.autopairs' },
     { import = 'plugins.bufferline' },
+    { import = 'plugins.comment' },
     -- { import = 'plugins.dressing' },
     { import = 'plugins.dropbar' },
     -- { import = 'plugins.gitlinker' },
