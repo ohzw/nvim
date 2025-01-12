@@ -21,6 +21,7 @@ require('lazy').setup {
     { import = 'plugins.themes.transparent' },
     { import = 'plugins.lsp' },
     { import = 'plugins.autopairs' },
+    { import = 'plugins.avante' },
     { import = 'plugins.bufferline' },
     { import = 'plugins.comment' },
     -- { import = 'plugins.dressing' },
