@@ -23,6 +23,7 @@ require('lazy').setup {
     { import = 'plugins.autopairs' },
     { import = 'plugins.avante' },
     { import = 'plugins.bufferline' },
+    { import = 'plugins.colorful-winsep' },
     { import = 'plugins.comment' },
     -- { import = 'plugins.dressing' },
     { import = 'plugins.dropbar' },
