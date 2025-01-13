@@ -19,6 +19,9 @@ return {
     -- peek definition
     vim.keymap.set('n', '<leader>pd', '<cmd>Lspsaga peek_definition<CR>')
     vim.keymap.set('n', '<leader>pt', '<cmd>Lspsaga peek_type_definition<CR>')
+
+    -- Callhierarchy
+    vim.keymap.set('n', '<leader>pc', '<cmd>Lspsaga incoming_calls<CR>')
   end,
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
