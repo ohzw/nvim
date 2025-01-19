@@ -79,3 +79,7 @@ vim.keymap.set('n', '<C-.>', vim.diagnostic.setloclist, { desc = 'Open diagnosti
 
 -- Exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+--- Tabs
+vim.keymap.set('n', 'tn', '<cmd>tabnext<CR>', { desc = 'go to next tab' })
+vim.keymap.set('n', 'tp', '<cmd>tabprevious<CR>', { desc = 'go to previous tab' })
