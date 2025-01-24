@@ -5,10 +5,21 @@ return {
   version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
   opts = {
     -- add any opts here
-    prodiver = 'openai',
-    auto_suggestions_provider = 'openai',
+    provider = 'deepseek',
+    auto_suggestions_provider = 'deepseek',
     openai = {
       model = 'gpt-4o-mini',
+    },
+    vendors = {
+      deepseek = {
+        __inherited_from = 'openai',
+        endpoint = 'https://api.deepseek.com/v1',
+        model = 'deepseek-chat',
+        api_key_name = 'DEEPSEEK_API_KEY',
+        timeout = 30000,
+        temperature = 0,
+        max_tokens = 4096,
+      },
     },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
