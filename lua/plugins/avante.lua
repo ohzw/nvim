@@ -7,9 +7,6 @@ return {
     -- add any opts here
     provider = 'deepseek',
     auto_suggestions_provider = 'deepseek',
-    openai = {
-      model = 'gpt-4o-mini',
-    },
     vendors = {
       deepseek = {
         __inherited_from = 'openai',
@@ -21,6 +18,18 @@ return {
         max_tokens = 4096,
       },
     },
+    behaviour = {
+      auto_suggestions = false, -- Experimental stage
+      auto_set_highlight_group = true,
+      auto_set_keymaps = true,
+      auto_apply_diff_after_generation = false,
+      support_paste_from_clipboard = false,
+      minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+    },
+    suggestion = {
+      debounce = 600,
+      throttle = 600,
+    },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = 'make',
@@ -30,8 +39,11 @@ return {
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
     --- The below dependencies are optional,
+    'echasnovski/mini.pick', -- for file_selector provider mini.pick
+    'nvim-telescope/telescope.nvim', -- for file_selector provider telescope
     'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions
-    'nvim-tree/nvim-web-devicons', -- or echas novski/mini.icons
+    'ibhagwan/fzf-lua', -- for file_selector provider fzf
+    'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
     'zbirenbaum/copilot.lua', -- for providers='copilot'
     {
       -- support for image pasting
