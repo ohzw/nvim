@@ -29,11 +29,8 @@ return {
   },
 
   config = function()
-    -- If you want icons for diagnostic errors, you'll need to define them somewhere:
-    vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
-    vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
-    vim.fn.sign_define('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
-    vim.fn.sign_define('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
+    -- Diagnostic signs are now configured globally in options.lua using vim.diagnostic.config
+    -- sign_define method was deprecated in v0.11
 
     require('neo-tree').setup {
       sources = { 'filesystem', 'buffers', 'git_status', 'diagnostics' },

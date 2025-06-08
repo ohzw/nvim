@@ -50,7 +50,20 @@ vim.opt.smartcase = true
 -- views can only be fully collapsed with the global statusline
 vim.opt.laststatus = 3
 
-vim.diagnostic.config { virtual_text = true, severity_sort = true }
+vim.diagnostic.config { 
+  virtual_text = { 
+    enable = true 
+  }, 
+  severity_sort = true,
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = ' ',
+      [vim.diagnostic.severity.WARN] = ' ',
+      [vim.diagnostic.severity.HINT] = '󰠠 ',
+      [vim.diagnostic.severity.INFO] = ' ',
+    }
+  }
+}
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
