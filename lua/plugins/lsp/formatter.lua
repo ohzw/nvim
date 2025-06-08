@@ -3,7 +3,7 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local conform = require 'conform'
-    local formatter_detector = require 'plugins.lsp.formatter-detector'
+    local formatter_detector = require 'utils.formatter-detector'
 
     formatter_detector.setup_formatter_detection()
 
