@@ -2,29 +2,34 @@ return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
   lazy = false,
-  version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
+  version = '*', -- set this to "*" if you want to always pull the latest change, false to update on release
   opts = {
-    -- add any opts here
     provider = 'deepseek',
+    -- WARNING: Since auto-suggestions are a high-frequency operation and therefore expensive,
+    -- currently designating it as `copilot` provider is dangerous because: https://github.com/yetone/avante.nvim/issues/1048
+    -- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
     auto_suggestions_provider = 'deepseek',
-    vendors = {
+    providers = {
       deepseek = {
         __inherited_from = 'openai',
-        endpoint = 'https://api.deepseek.com/v1',
-        model = 'deepseek-chat',
+        endpoint = 'https://api.deepseek.com',
+        model = 'deepseek-coder',
         api_key_name = 'DEEPSEEK_API_KEY',
         timeout = 30000,
-        temperature = 0,
-        max_tokens = 4096,
+        extra_request_body = {
+          temperature = 0,
+          max_tokens = 4096,
+        },
       },
     },
     behaviour = {
-      auto_suggestions = false, -- Experimental stage
+      -- Experimental stage
+      auto_suggestions = false,
       auto_set_highlight_group = true,
       auto_set_keymaps = true,
       auto_apply_diff_after_generation = false,
       support_paste_from_clipboard = false,
-      minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
+      minimize_diff = true,
     },
     suggestion = {
       debounce = 600,
