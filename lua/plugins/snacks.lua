@@ -174,6 +174,20 @@ return {
       desc = 'which_key_ignore',
     },
     {
+      '<leader>ts',
+      function()
+        vim.cmd 'split | terminal'
+      end,
+      desc = 'Open Terminal in Horizontal Split',
+    },
+    {
+      '<leader>tv',
+      function()
+        vim.cmd 'vsplit | terminal'
+      end,
+      desc = 'Open Terminal in Vertical Split',
+    },
+    {
       ']]',
       function()
         Snacks.words.jump(vim.v.count1)
