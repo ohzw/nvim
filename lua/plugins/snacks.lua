@@ -1,19 +1,67 @@
+local function get_image_dimensions(image_path)
+  local handle = io.popen(string.format('identify -format "%%wx%%h" %s', image_path))
+  local result = handle:read('*a'):gsub('%s+', '')
+  handle:close()
+
+  local width, height = result:match '(%d+)x(%d+)'
+  return tonumber(width), tonumber(height)
+end
+
+local function get_chafa_config(image_path, max_height_ratio, max_width_ratio)
+  local terminal_width = vim.api.nvim_win_get_width(0)
+  local terminal_height = vim.api.nvim_win_get_height(0)
+
+  local img_width, img_height = get_image_dimensions(image_path)
+  if not img_width or not img_height then
+    return { cmd = 'echo "Failed to get image dimensions"', width = 50, height = 10 }
+  end
+
+  local max_display_width = math.floor(terminal_width * max_width_ratio)
+  local max_display_height = math.floor(terminal_height * max_height_ratio)
+
+  local display_width = max_display_width
+  local display_height = max_display_height
+
+  local cmd = string.format(
+    'chafa %s --format symbols --symbols vhalf --size %dx%d --align center -w 1',
+    image_path,
+    display_width,
+    display_height
+  )
+
+  return {
+    cmd = cmd,
+    width = display_width,
+    height = display_height,
+  }
+end
+
+local image_path = '~/Desktop/nvim-dashboard-header/GswqwfXbEAATzpi.png'
+local max_height_ratio = 0.5
+local max_width_ratio = 0.5
+
+local config = get_chafa_config(image_path, max_height_ratio, max_width_ratio)
+
 return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
   ---@type snacks.Config
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
     animate = { enabled = true },
     bigfile = { enabled = true },
     bufdelete = { enabled = true },
     dashboard = {
       enabled = true,
+      width = config.width,
       sections = {
-        { section = 'header' },
+        {
+          section = 'terminal',
+          padding = 1,
+          cmd = config.cmd,
+          width = config.width,
+          height = config.height,
+        },
         { icon = ' ', title = 'Keymaps', section = 'keys', indent = 2, padding = 1 },
         { icon = ' ', title = 'Recent Files', section = 'recent_files', indent = 2, padding = 1 },
         { icon = ' ', title = 'Projects', section = 'projects', indent = 2, padding = 1 },
@@ -49,7 +97,7 @@ return {
     debug = { enabled = true },
     dim = { enabled = true },
     git = { enabled = true },
-    gitbrowse = { enabled = true },
+    gitbrowse = { enabled = false },
     indent = { enabled = true, animate = { enabled = false } },
     input = { enabled = true },
     notifier = { enabled = true, timeout = 3000 },
@@ -116,21 +164,21 @@ return {
     --   end,
     --   desc = 'Rename File',
     -- },
-    {
-      '<leader>gB',
-      function()
-        Snacks.gitbrowse()
-      end,
-      desc = 'Git Browse',
-      mode = { 'n', 'v' },
-    },
-    {
-      '<leader>gb',
-      function()
-        Snacks.git.blame_line()
-      end,
-      desc = 'Git Blame Line',
-    },
+    -- {
+    --   '<leader>gb',
+    --   function()
+    --     Snacks.gitbrowse()
+    --   end,
+    --   desc = 'Git Browse',
+    --   mode = { 'n', 'v' },
+    -- },
+    -- {
+    --   '<leader>gb',
+    --   function()
+    --     Snacks.git.blame_line()
+    --   end,
+    --   desc = 'Git Blame Line',
+    -- },
     {
       '<leader>gf',
       function()
