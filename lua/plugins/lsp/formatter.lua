@@ -3,101 +3,20 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local conform = require 'conform'
-    local notified = false
+    local formatter_detector = require 'plugins.lsp.formatter-detector'
 
-    local function file_exists(name)
-      local f = io.open(name, 'r')
-      if f ~= nil then
-        io.close(f)
-        return true
-      else
-        return false
-      end
-    end
-
-    local function detect_and_notify_formatter()
-      if notified then
-        return
-      end
-
-      -- Biome config files
-      if
-        file_exists 'biome.json'
-        or file_exists 'biome.jsonc'
-        or file_exists '.biome.json'
-        or file_exists '.biome.jsonc'
-      then
-        vim.notify('Using Biome formatter', vim.log.levels.INFO, { title = 'Formatter' })
-        notified = true
-      -- Prettier config files
-      elseif
-        file_exists '.prettierrc'
-        or file_exists '.prettierrc.json'
-        or file_exists '.prettierrc.yaml'
-        or file_exists '.prettierrc.yml'
-        or file_exists '.prettierrc.js'
-        or file_exists '.prettierrc.mjs'
-        or file_exists '.prettierrc.cjs'
-        or file_exists '.prettierrc.toml'
-        or file_exists 'prettier.config.js'
-        or file_exists 'prettier.config.mjs'
-        or file_exists 'prettier.config.cjs'
-      then
-        vim.notify('Using Prettier formatter', vim.log.levels.INFO, { title = 'Formatter' })
-        notified = true
-      else
-        vim.notify('Using fallback formatters (Biome → Prettier)', vim.log.levels.INFO, { title = 'Formatter' })
-        notified = true
-      end
-    end
-
-    local function get_formatter_for_project()
-      -- Biome config files
-      if
-        file_exists 'biome.json'
-        or file_exists 'biome.jsonc'
-        or file_exists '.biome.json'
-        or file_exists '.biome.jsonc'
-      then
-        return { 'biome' }
-      -- Prettier config files
-      elseif
-        file_exists '.prettierrc'
-        or file_exists '.prettierrc.json'
-        or file_exists '.prettierrc.yaml'
-        or file_exists '.prettierrc.yml'
-        or file_exists '.prettierrc.js'
-        or file_exists '.prettierrc.mjs'
-        or file_exists '.prettierrc.cjs'
-        or file_exists '.prettierrc.toml'
-        or file_exists 'prettier.config.js'
-        or file_exists 'prettier.config.mjs'
-        or file_exists 'prettier.config.cjs'
-      then
-        return { 'prettier' }
-      else
-        return { 'biome', 'prettier' }
-      end
-    end
-
-    -- 何のフォーマッターを使うかを検出して通知する
-    vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
-      callback = function()
-        vim.schedule(detect_and_notify_formatter)
-      end,
-      once = true,
-    })
+    formatter_detector.setup_formatter_detection()
 
     conform.setup {
       formatters_by_ft = {
-        javascript = get_formatter_for_project,
-        typescript = get_formatter_for_project,
-        javascriptreact = get_formatter_for_project,
-        typescriptreact = get_formatter_for_project,
+        javascript = formatter_detector.get_formatter_for_project,
+        typescript = formatter_detector.get_formatter_for_project,
+        javascriptreact = formatter_detector.get_formatter_for_project,
+        typescriptreact = formatter_detector.get_formatter_for_project,
         svelte = { 'prettier' },
         css = { 'prettier' },
         html = { 'prettier' },
-        json = get_formatter_for_project,
+        json = formatter_detector.get_formatter_for_project,
         yaml = { 'prettier' },
         markdown = { 'prettier' },
         graphql = { 'prettier' },
