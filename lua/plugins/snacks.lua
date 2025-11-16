@@ -36,7 +36,8 @@ local function get_chafa_config(image_path, max_height_ratio, max_width_ratio)
   }
 end
 
-local image_path = '~/Desktop/nvim-dashboard-header/GswqwfXbEAATzpi.png'
+local image_path = '~/Desktop/nvim-dashboard-header/dashboard-bg-5.png'
+-- local image_path = '~/Desktop/nvim-dashboard-header/GswqwfXbEAATzpi.png'
 local max_height_ratio = 0.5
 local max_width_ratio = 0.5
 
