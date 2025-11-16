@@ -29,7 +29,7 @@ require('lazy').setup {
     { import = 'plugins.copilot' },
     -- { import = 'plugins.dressing' },
     { import = 'plugins.dropbar' },
-    -- { import = 'plugins.gitlinker' },
+    { import = 'plugins.gitlinker' },
     { import = 'plugins.gitsigns' },
     -- { import = 'plugins.indent-blankline' },
     -- { import = 'plugins.lazygit' },
