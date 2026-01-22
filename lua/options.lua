@@ -98,3 +98,32 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --- Tabs
 vim.keymap.set('n', 'tn', '<cmd>tabnext<CR>', { desc = 'go to next tab' })
 vim.keymap.set('n', 'tp', '<cmd>tabprevious<CR>', { desc = 'go to previous tab' })
+
+-- Copy file path with line numbers
+vim.keymap.set('v', '<leader>l', function()
+  local start_line = vim.fn.line 'v'
+  local end_line = vim.fn.line '.'
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+
+  local file_path = vim.fn.expand '%:.'
+  local path_with_lines
+
+  if start_line == end_line then
+    path_with_lines = string.format('@%s:%d', file_path, start_line)
+  else
+    path_with_lines = string.format('@%s:%d-%d', file_path, start_line, end_line)
+  end
+
+  vim.fn.setreg('+', path_with_lines)
+  vim.notify(string.format('Copied: %s', path_with_lines), vim.log.levels.INFO)
+end, { desc = 'Copy file path with line numbers' })
+
+vim.keymap.set('n', '<leader>l', function()
+  local file_path = vim.fn.expand '%:.'
+  local line = vim.fn.line '.'
+  local path_with_line = string.format('@%s:%d', file_path, line)
+  vim.fn.setreg('+', path_with_line)
+  vim.notify(string.format('Copied: %s', path_with_line), vim.log.levels.INFO)
+end, { desc = 'Copy file path with current line' })
