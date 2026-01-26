@@ -45,6 +45,7 @@ require('lazy').setup {
     { import = 'plugins.scrollbar' },
     { import = 'plugins.session' },
     { import = 'plugins.snacks' },
+    { import = 'plugins.supermaven' },
     { import = 'plugins.telescope' },
     { import = 'plugins.treesitter' },
     -- { import = 'plugins.vim-maximizer' },
